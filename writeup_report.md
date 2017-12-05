@@ -88,7 +88,7 @@ The final step was to run the simulator to see how well the car was driving arou
 
 At the end of the process, the vehicle is able to drive autonomously around the track without leaving the road.
 
-![alt text][image10]
+![Video Link][image10]
 
 #### 2. Final Model Architecture
 
