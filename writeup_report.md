@@ -17,7 +17,7 @@ The goals / steps of this project are the following:
 
 [//]: # (Image References)
 
-[image1]: ./examples/placeholder.png "Model Visualization"
+[image1]: ./examples/nvidia_model.png "Model Visualization"
 [image2]: ./examples/recovery_right.png "Recovery Image"
 [image3]: ./examples/recovery_left.png "Recovery Image"
 [image4]: ./examples/recovery_bridge.png "Recovery Image"
