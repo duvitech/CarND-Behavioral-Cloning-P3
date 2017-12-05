@@ -9,6 +9,7 @@ correction = 0.2
 images = []
 measurements = []
 
+''' method for loading training data from csv file  '''
 def load_training_data(location):
     heading = True
     with open('../'+ location +'/driving_log.csv') as csvfile:
@@ -24,7 +25,8 @@ def load_training_data(location):
             source_path = line[i]
             filename = source_path.split('\\')[-1]
             current_path = '../'+ location +'/IMG/' + filename
-            
+            ''' add original image to training set, and also 
+                augment data by adding flipped image and measurements '''
             image = cv2.imread(current_path)
             images.append(image)
             measurement = float(line[3])        
@@ -39,13 +41,12 @@ def load_training_data(location):
             measurement_inverted = measurement * -1.0
             measurements.append(measurement_inverted)
 
-#load_training_data('training_data')
-#Sload_training_data('training_data2')
-load_training_data('training_data3')
+load_training_data('training_data')
 
 X_train = np.array(images)
 y_train = np.array(measurements)
 
+''' imports for keras  '''
 from keras.models import Sequential
 from keras.layers import Flatten, Dense, Dropout, Lambda, SpatialDropout2D
 from keras.layers import Convolution2D, Cropping2D
@@ -56,6 +57,7 @@ model = Sequential()
 ''' normalize layer '''
 model.add(Lambda(lambda x: (x / 255.0) - 0.5, input_shape=(160,320,3)))
 
+''' crop image to focus the neural network on what is important  '''
 model.add(Cropping2D(cropping=((70, 25), (0,0))))
 
 ''' nVidia Model '''
@@ -80,9 +82,10 @@ model.add(Dense(120))
 model.add(Dense(84))
 model.add(Dense(1)) '''
 
-
+''' compile and train network  '''
 model.compile(loss='mse', optimizer='adam')
 model.fit(X_train, y_train, validation_split=0.2, shuffle=True, nb_epoch=10)
 
-model.save('model.h6')
+''' save trained model '''
+model.save('model.h5')
 
